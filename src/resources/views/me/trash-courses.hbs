@@ -1,6 +1,6 @@
 <div class="mt-4">
-    <h3>Khoa hoc cua toi</h3>
-    <a href="/me/trash/courses">Thung rac</a>
+    <h3>Khoa hoc da xoa</h3>
+    <a href="/me/stored/courses">Danh sach khoa hoc</a>
     <table class="table mt-4">
         <thead>
             <tr>
@@ -19,9 +19,9 @@
                 <td>{{this.level}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>
-                    <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                    <a href="#" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a>
                     <a href="" class="btn btn-link" data-bs-toggle="modal" data-id="{{_id}}"
-                        data-bs-target="#delete-course-modal">Xóa</a>
+                        data-bs-target="#delete-course-modal">Xóa vĩnh viễn</a>
                 </td>
             </tr>
 
@@ -29,8 +29,8 @@
             <tr>
                 <td colspan="5">
                     <div class="alert alert-danger" role="alert">
-                        Không có khóa học nào được lưu trữ.
-                        <a href="/courses/create">Dang khoa hoc</a>
+                        Bạn chưa xóa khóa học nào.
+                        <a href="/me/stored/courses">Danh sach khoa hoc</a>
                     </div>
                 </td>
             </tr>
@@ -62,6 +62,7 @@
 
 {{!-Delete hidden form}}
 <form name="delete-course-form" method="POST"></form>
+<form name="restore-course-form" method="POST"></form>
 {{!-End delete hidden form}}
 
 <script>
@@ -69,7 +70,9 @@
         // Initialize Bootstrap tooltips
         var courseId = null;
         var deleteCourseForm = document.forms['delete-course-form'];
+        var restoreCourseForm = document.forms['restore-course-form'];
         var btnDelete = document.getElementById('btn-delete-course');
+        var btnRestore = $('.btn-restore');
 
         // Show the modal when the delete button is clicked
         $('#delete-course-modal').on('show.bs.modal', function (event) {
@@ -81,9 +84,16 @@
 
         // When the delete button in the modal is clicked
         btnDelete.onclick = function () {
-            deleteCourseForm.action = '/courses/' + courseId + '?_method=DELETE';
+            deleteCourseForm.action = '/courses/' + courseId + '/force?_method=DELETE';
             deleteCourseForm.submit();
         }
-    })
+
+        // When the restore button is clicked
+        $(document).on('click', '.btn-restore', function (event) {
+            var courseId = $(this).data('id');
+            restoreCourseForm.action = '/courses/' + courseId + '/restore?_method=PATCH';
+            restoreCourseForm.submit();
+        });
+    });
 
 </script>
