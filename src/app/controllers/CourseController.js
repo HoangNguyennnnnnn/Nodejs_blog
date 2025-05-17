@@ -20,11 +20,7 @@ class CourseController {
         const course = new Course(req.body);
         course.save()
             .then(() => res.redirect('/stored/courses'))
-            .catch(error => {
-                console.log(error);
-            });
-
-        res.send('ok');
+            .catch(next);
     }
     //[[GET]]courses/:id/edit
     edit(req, res, next) {
