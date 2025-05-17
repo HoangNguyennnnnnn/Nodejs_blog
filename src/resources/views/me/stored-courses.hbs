@@ -1,6 +1,8 @@
 <div class="mt-4">
     <h3>Khoa hoc cua toi</h3>
-    <a href="/me/trash/courses">Thung rac</a>
+    {{!-- {{#if deletedCount}} --}}
+    <a href="/me/trash/courses">Thung rac ({{deletedCount}})</a>
+    {{!-- {{/if}} --}}
     <table class="table mt-4">
         <thead>
             <tr>
@@ -49,7 +51,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Bạn có chắc chắn muốn xóa khóa học này không? Tất cả dữ liệu liên quan sẽ bị xóa vĩnh viễn.
+                Bạn có chắc chắn muốn xóa khóa học này không?
             </div>
             <div class="modal-footer">
                 <button id="btn-delete-course" type="button" class="btn btn-danger">Xoa</button>
